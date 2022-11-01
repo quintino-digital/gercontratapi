@@ -21,8 +21,13 @@ public class ContratoService {
         ContratoResponseDTO contratoResponseDTO = new ContratoResponseDTO();
         convertContratoRequestDTOToContratoModel(contratoRequestDTO, contratoModel);
         contratoModel = this.contratoRepository.save(contratoModel);
+        this.criarParcelamento(contratoModel);
         convertContratoModelToContratoResponseDTO(contratoModel, contratoResponseDTO);
         return contratoResponseDTO;
+    }
+
+    private void criarParcelamento(ContratoModel contratoModel) {
+
     }
 
     public List<ContratoModel> findAll() {
