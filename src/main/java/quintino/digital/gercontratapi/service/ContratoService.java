@@ -16,6 +16,9 @@ public class ContratoService {
     @Autowired
     private ContratoRepository contratoRepository;
 
+    @Autowired
+    private ParcelamentoService parcerParcelamentoService;
+
     public ContratoResponseDTO saveOne(ContratoRequestDTO contratoRequestDTO) {
         ContratoModel contratoModel = new ContratoModel();
         ContratoResponseDTO contratoResponseDTO = new ContratoResponseDTO();
@@ -27,7 +30,11 @@ public class ContratoService {
     }
 
     private void criarParcelamento(ContratoModel contratoModel) {
-
+        this.parcerParcelamentoService.gerarParcelamento(
+                contratoModel.getDataInicio(),
+                contratoModel.getDiaVencimento(),
+                contratoModel.getValorJuros(),
+                contratoModel.getQuantidadeParcela());
     }
 
     public List<ContratoModel> findAll() {

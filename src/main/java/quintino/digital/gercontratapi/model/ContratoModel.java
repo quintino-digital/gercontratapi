@@ -48,6 +48,8 @@ public class ContratoModel {
     @Column(name = "IDENTIFICADOR", unique = true, nullable = false)
     private String identificador;
 
+    public ContratoModel() { }
+
     public TipoContratoModel getTipoContratoModel() {
         return tipoContratoModel;
     }
@@ -55,8 +57,6 @@ public class ContratoModel {
     public void setTipoContratoModel(TipoContratoModel tipoContratoModel) {
         this.tipoContratoModel = tipoContratoModel;
     }
-
-    public ContratoModel() { }
 
     public Long getCodigo() {
         return codigo;
