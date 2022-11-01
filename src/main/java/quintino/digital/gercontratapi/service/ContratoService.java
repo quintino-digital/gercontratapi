@@ -30,11 +30,7 @@ public class ContratoService {
     }
 
     private void criarParcelamento(ContratoModel contratoModel) {
-        this.parcerParcelamentoService.gerarParcelamento(
-                contratoModel.getDataInicio(),
-                contratoModel.getDiaVencimento(),
-                contratoModel.getValorJuros(),
-                contratoModel.getQuantidadeParcela());
+        this.parcerParcelamentoService.gerarContratoParcelamento(contratoModel);
     }
 
     public List<ContratoModel> findAll() {
