@@ -24,4 +24,9 @@ public class ParcelamentoController {
         return this.parcelamentoService.findAll();
     }
 
+    @GetMapping("/parcelamento-mes-corrente")
+    public List<ParcelamentoModel> recuperarParcelamentoMesCorrente() {
+        return this.parcelamentoService.recuperarParcelamentoMesCorrente();
+    }
+
 }

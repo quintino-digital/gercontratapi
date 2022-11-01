@@ -7,6 +7,7 @@ import quintino.digital.gercontratapi.model.ContratoModel;
 import quintino.digital.gercontratapi.model.ContratoParcelamentoModel;
 import quintino.digital.gercontratapi.model.ParcelamentoModel;
 import quintino.digital.gercontratapi.repository.ContratoParcelamentoRepository;
+import quintino.digital.gercontratapi.repository.ParcelamentoImplementacaoRepository;
 import quintino.digital.gercontratapi.repository.ParcelamentoRepository;
 import quintino.digital.gercontratapi.utility.DateUtility;
 
@@ -20,6 +21,9 @@ public class ParcelamentoService {
     private ParcelamentoRepository parcelamentoRepository;
 
     @Autowired
+    private ParcelamentoImplementacaoRepository parcelamentoImplementacaoRepository;
+
+    @Autowired
     private ContratoParcelamentoRepository contratoParcelamentoRepository;
 
     @GetMapping
@@ -30,7 +34,7 @@ public class ParcelamentoService {
     public void gerarContratoParcelamento(ContratoModel contratoModel) {
         for( int index = 0 ; index < contratoModel.getQuantidadeParcela() ; index++ ) {
             ParcelamentoModel parcelamentoModel = new ParcelamentoModel();
-                parcelamentoModel.setIdentificador("PARCELAEMPRESTIMOBANCARIO0012022");
+                parcelamentoModel.setIdentificador("PARCELAEMPRESTIMOBANCARIO001202224");
                 parcelamentoModel.setDataVencimento(this.configurarDataVencimentoParcela(contratoModel.getDiaVencimento()-1, index-1));
                 parcelamentoModel.setDataPagamento(null);
                 this.parcelamentoRepository.save(parcelamentoModel);
@@ -40,6 +44,10 @@ public class ParcelamentoService {
 
     private Date configurarDataVencimentoParcela(Integer diaVencimento, Integer mesVencimento) {
         return DateUtility.gerarData(diaVencimento, mesVencimento);
+    }
+
+    public List<ParcelamentoModel> recuperarParcelamentoMesCorrente() {
+        return this.parcelamentoImplementacaoRepository.recuperarParcelamentoMesCorrente();
     }
 
 }
