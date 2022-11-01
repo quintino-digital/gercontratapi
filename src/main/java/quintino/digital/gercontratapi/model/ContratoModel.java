@@ -22,10 +22,10 @@ public class ContratoModel {
     private TipoPeriodoModel tipoPeriodoModel;
 
     @Column(name = "ID_PESSOA_CONTRATANTE", nullable = true)
-    private UUID pessoaContratante;
+    private Long pessoaContratante;
 
     @Column(name = "ID_PESSOA_CONTRATADA", nullable = true)
-    private UUID pessoaContratada;
+    private Long pessoaContratada;
 
     @Column(name = "DATA_INICIO", nullable = false)
     private Date dataInicio;
@@ -74,19 +74,19 @@ public class ContratoModel {
         this.tipoPeriodoModel = tipoPeriodoModel;
     }
 
-    public UUID getPessoaContratante() {
+    public Long getPessoaContratante() {
         return pessoaContratante;
     }
 
-    public void setPessoaContratante(UUID pessoaContratante) {
+    public void setPessoaContratante(Long pessoaContratante) {
         this.pessoaContratante = pessoaContratante;
     }
 
-    public UUID getPessoaContratada() {
+    public Long getPessoaContratada() {
         return pessoaContratada;
     }
 
-    public void setPessoaContratada(UUID pessoaContratada) {
+    public void setPessoaContratada(Long pessoaContratada) {
         this.pessoaContratada = pessoaContratada;
     }
 
