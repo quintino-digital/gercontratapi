@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "TB_TIPO_PERIODO")
-public class TipoPeriodoModel {
+public class TipoPeriodoFinanceiroModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -14,7 +14,7 @@ public class TipoPeriodoModel {
     @Column(name = "DESCRICAO", unique = true, nullable = false)
     private String descricao;
 
-    public TipoPeriodoModel() { }
+    public TipoPeriodoFinanceiroModel() { }
 
     public Long getCodigo() {
         return codigo;
