@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import quintino.digital.gercontratapi.dto.ContratoRequestDTO;
+import quintino.digital.gercontratapi.dto.ContratoRequestOriginDTO;
 import quintino.digital.gercontratapi.model.ContratoModel;
 import quintino.digital.gercontratapi.service.ContratoService;
 
@@ -25,8 +25,8 @@ public class ContratoController {
     private ContratoService contratoService;
 
     @PostMapping
-    public ResponseEntity<Object> saveOne(@RequestBody ContratoRequestDTO contratoRequestDTO) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(this.contratoService.saveOne(contratoRequestDTO));
+    public ResponseEntity<Object> saveOne(@RequestBody ContratoRequestOriginDTO contratoRequestOriginDTO) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(this.contratoService.saveOne(contratoRequestOriginDTO));
     }
 
     @GetMapping

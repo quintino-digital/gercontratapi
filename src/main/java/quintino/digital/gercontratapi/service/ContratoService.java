@@ -1,14 +1,15 @@
 package quintino.digital.gercontratapi.service;
 
+import java.util.List;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import quintino.digital.gercontratapi.dto.ContratoRequestDTO;
+
+import quintino.digital.gercontratapi.dto.ContratoRequestOriginDTO;
 import quintino.digital.gercontratapi.dto.ContratoResponseDTO;
 import quintino.digital.gercontratapi.model.ContratoModel;
 import quintino.digital.gercontratapi.repository.ContratoRepository;
-
-import java.util.List;
 
 @Service
 public class ContratoService {
@@ -19,10 +20,10 @@ public class ContratoService {
     @Autowired
     private ParcelamentoService parcerParcelamentoService;
 
-    public ContratoResponseDTO saveOne(ContratoRequestDTO contratoRequestDTO) {
+    public ContratoResponseDTO saveOne(ContratoRequestOriginDTO contratoRequestOriginDTO) {
         ContratoModel contratoModel = new ContratoModel();
         ContratoResponseDTO contratoResponseDTO = new ContratoResponseDTO();
-        convertContratoRequestDTOToContratoModel(contratoRequestDTO, contratoModel);
+        convertContratoRequestOriginDTOToContratoModel(contratoRequestOriginDTO, contratoModel);
         contratoModel = this.contratoRepository.save(contratoModel);
         this.criarParcelamento(contratoModel);
         convertContratoModelToContratoResponseDTO(contratoModel, contratoResponseDTO);
@@ -37,8 +38,21 @@ public class ContratoService {
         return this.contratoRepository.findAll();
     }
 
-    private static void convertContratoRequestDTOToContratoModel(ContratoRequestDTO contratoRequestDTO, ContratoModel contratoModel) {
-        BeanUtils.copyProperties(contratoRequestDTO, contratoModel);
+    // TODO -- Implementar Conversao de ContratoRequestOriginDTO para ContratoModel
+    private static void convertContratoRequestOriginDTOToContratoModel(ContratoRequestOriginDTO contratoRequestOriginDTO, ContratoModel contratoModel) {
+    	ContratoModel contratoModelResultado = new ContratoModel();
+	    	contratoModelResultado.setDataFim(null);
+	    	contratoModelResultado.setDataInicio(null);
+	    	contratoModelResultado.setDiaVencimento(null);
+	    	contratoModelResultado.setIdentificador(null);
+	    	contratoModelResultado.setPessoaContratada(null);
+	    	contratoModelResultado.setPessoaContratante(null);
+	    	contratoModelResultado.setQuantidadeParcela(null);
+	    	contratoModelResultado.setTipoContratoModel(null);
+	    	contratoModelResultado.setTipoPeriodoModel(null);
+	    	contratoModelResultado.setValorEfetivo(null);
+	    	contratoModelResultado.setValorParcela(null);
+    		
     }
 
     private static void convertContratoModelToContratoResponseDTO(ContratoModel contratoModel, ContratoResponseDTO contratoResponseDTO) {
