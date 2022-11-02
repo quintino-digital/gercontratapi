@@ -1,9 +1,8 @@
 package quintino.digital.gercontratapi.dto;
 
 import quintino.digital.gercontratapi.model.TipoContratoModel;
-import quintino.digital.gercontratapi.model.TipoPeriodoModel;
+import quintino.digital.gercontratapi.model.TipoPeriodoFinanceiroModel;
 
-import javax.persistence.*;
 import java.util.Date;
 import java.util.UUID;
 
@@ -11,7 +10,7 @@ public class ContratoRequestDTO {
 
     private TipoContratoModel tipoContratoModel;
 
-    private TipoPeriodoModel tipoPeriodoModel;
+    private TipoPeriodoFinanceiroModel tipoPeriodoModel;
 
     private UUID pessoaContratante;
 
@@ -41,11 +40,11 @@ public class ContratoRequestDTO {
         this.tipoContratoModel = tipoContratoModel;
     }
 
-    public TipoPeriodoModel getTipoPeriodoModel() {
+    public TipoPeriodoFinanceiroModel getTipoPeriodoModel() {
         return tipoPeriodoModel;
     }
 
-    public void setTipoPeriodoModel(TipoPeriodoModel tipoPeriodoModel) {
+    public void setTipoPeriodoModel(TipoPeriodoFinanceiroModel tipoPeriodoModel) {
         this.tipoPeriodoModel = tipoPeriodoModel;
     }
 

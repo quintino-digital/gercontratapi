@@ -3,11 +3,8 @@ package quintino.digital.gercontratapi;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
-class GercontratapiApplicationTests {
+class ApplicationTests {
 
-	@Test
-	void contextLoads() {
-	}
+	void contextLoads() { }
 
 }

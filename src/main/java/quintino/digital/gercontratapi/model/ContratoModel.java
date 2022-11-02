@@ -2,7 +2,6 @@ package quintino.digital.gercontratapi.model;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.UUID;
 
 @Entity
 @Table(name = "TB_CONTRATO")
@@ -19,7 +18,7 @@ public class ContratoModel {
 
     @ManyToOne
     @JoinColumn(name = "ID_TIPO_PERIODO")
-    private TipoPeriodoModel tipoPeriodoModel;
+    private TipoPeriodoFinanceiroModel tipoPeriodoModel;
 
     @Column(name = "ID_PESSOA_CONTRATANTE", nullable = true)
     private Long pessoaContratante;
@@ -66,11 +65,11 @@ public class ContratoModel {
         this.codigo = codigo;
     }
 
-    public TipoPeriodoModel getTipoPeriodoModel() {
+    public TipoPeriodoFinanceiroModel getTipoPeriodoModel() {
         return tipoPeriodoModel;
     }
 
-    public void setTipoPeriodoModel(TipoPeriodoModel tipoPeriodoModel) {
+    public void setTipoPeriodoModel(TipoPeriodoFinanceiroModel tipoPeriodoModel) {
         this.tipoPeriodoModel = tipoPeriodoModel;
     }
 
