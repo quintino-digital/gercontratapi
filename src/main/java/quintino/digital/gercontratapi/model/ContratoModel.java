@@ -41,8 +41,8 @@ public class ContratoModel {
     @Column(name = "VALOR_EFETIVO", nullable = false)
     private Double valorEfetivo;
 
-    @Column(name = "VALOR_JUROS", nullable = false)
-    private Double valorJuros;
+    @Column(name = "VALOR_PARCELA", nullable = false)
+    private Double valorParcela;
 
     @Column(name = "IDENTIFICADOR", unique = true, nullable = false)
     private String identificador;
@@ -129,15 +129,15 @@ public class ContratoModel {
         this.valorEfetivo = valorEfetivo;
     }
 
-    public Double getValorJuros() {
-        return valorJuros;
-    }
+    public Double getValorParcela() {
+		return valorParcela;
+	}
 
-    public void setValorJuros(Double valorJuros) {
-        this.valorJuros = valorJuros;
-    }
+	public void setValorParcela(Double valorParcela) {
+		this.valorParcela = valorParcela;
+	}
 
-    public String getIdentificador() {
+	public String getIdentificador() {
         return identificador;
     }
 

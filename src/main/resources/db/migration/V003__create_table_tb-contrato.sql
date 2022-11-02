@@ -10,7 +10,7 @@ create table if not exists tb_contrato (
     dia_vencimento integer not null,
     quantidade_parcela integer not null,
     valor_efetivo float not null,
-    valor_juros float not null,
+    valor_parcela float not null,
     constraint pk_contrato primary key (codigo),
     constraint fk_tipo_contrato foreign key (id_tipo_contrato) references tb_tipo_contrato,
     constraint fk_tipo_periodo foreign key (id_tipo_periodo) references tb_tipo_periodo
