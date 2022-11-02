@@ -1,19 +1,19 @@
 package quintino.digital.gercontratapi.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import quintino.digital.gercontratapi.dto.ContratoRequestDTO;
-import quintino.digital.gercontratapi.model.ContratoModel;
-import quintino.digital.gercontratapi.model.ParcelamentoModel;
-import quintino.digital.gercontratapi.service.ContratoService;
-import quintino.digital.gercontratapi.service.ParcelamentoService;
-
 import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import quintino.digital.gercontratapi.model.ParcelamentoModel;
+import quintino.digital.gercontratapi.service.ParcelamentoService;
 
 @RestController
 @RequestMapping("/api/v1/parcelamento")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class ParcelamentoController {
 
     @Autowired
