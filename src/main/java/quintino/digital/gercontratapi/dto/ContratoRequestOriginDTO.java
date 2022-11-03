@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class ContratoRequestOriginDTO {
 	
-	private Integer codigoInstituicaoFinanceira;
+	private Long codigoInstituicaoFinanceira;
 	
 	private Integer codigoTipoContratoModel;
 	
@@ -22,11 +22,11 @@ public class ContratoRequestOriginDTO {
 
     public ContratoRequestOriginDTO() { }
 
-	public Integer getCodigoInstituicaoFinanceira() {
+	public Long getCodigoInstituicaoFinanceira() {
 		return codigoInstituicaoFinanceira;
 	}
 
-	public void setCodigoInstituicaoFinanceira(Integer codigoInstituicaoFinanceira) {
+	public void setCodigoInstituicaoFinanceira(Long codigoInstituicaoFinanceira) {
 		this.codigoInstituicaoFinanceira = codigoInstituicaoFinanceira;
 	}
 
