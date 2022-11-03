@@ -11,6 +11,7 @@ import quintino.digital.gercontratapi.model.TipoContratoModel;
 import quintino.digital.gercontratapi.model.TipoPeriodoFinanceiroModel;
 import quintino.digital.gercontratapi.repository.ContratoRepository;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -34,8 +35,7 @@ public class ContratoService {
     public ContratoResponseDTO saveOne(ContratoRequestOriginDTO contratoRequestOriginDTO) {
         ContratoModel contratoModel = new ContratoModel();
         ContratoResponseDTO contratoResponseDTO = new ContratoResponseDTO();
-        convertContratoRequestOriginDTOToContratoModel(contratoRequestOriginDTO, contratoModel);
-        contratoModel = this.contratoRepository.save(contratoModel);
+        contratoModel = this.contratoRepository.save(convertContratoRequestOriginDTOToContratoModel(contratoRequestOriginDTO, contratoModel));
         this.criarParcelamento(contratoModel);
         convertContratoModelToContratoResponseDTO(contratoModel, contratoResponseDTO);
         return contratoResponseDTO;
@@ -50,19 +50,20 @@ public class ContratoService {
     }
 
     // TODO -- Implementar Conversao de ContratoRequestOriginDTO para ContratoModel
-    private void convertContratoRequestOriginDTOToContratoModel(ContratoRequestOriginDTO contratoRequestOriginDTO, ContratoModel contratoModel) {
+    private ContratoModel convertContratoRequestOriginDTOToContratoModel(ContratoRequestOriginDTO contratoRequestOriginDTO, ContratoModel contratoModel) {
     	ContratoModel contratoModelResultado = new ContratoModel();
             contratoModelResultado.setTipoContratoModel(this.recuperarTipoContrato(contratoRequestOriginDTO.getCodigoTipoContratoModel()));
             contratoModelResultado.setTipoPeriodoModel(this.recuperarTipoPeriodoFinanceiro(contratoRequestOriginDTO.getCodigoTipoPeriodoModel()));
-            contratoModelResultado.setPessoaContratada(null);
-            contratoModelResultado.setPessoaContratante(null);
-	    	contratoModelResultado.setDataFim(null);
+            contratoModelResultado.setPessoaContratada(this.recuperarPessoa(contratoRequestOriginDTO.getCodigoInstituicaoFinanceira()).getCodigo());
+            contratoModelResultado.setPessoaContratante(this.recuperarPessoa(1L).getCodigo());
 	    	contratoModelResultado.setDataInicio(contratoRequestOriginDTO.getDataInicio());
             contratoModelResultado.setQuantidadeParcela(contratoRequestOriginDTO.getQuantidadeParcela());
             contratoModelResultado.setValorEfetivo(contratoRequestOriginDTO.getValorEfetivo());
             contratoModelResultado.setValorParcela(contratoRequestOriginDTO.getValorParcela());
-	    	contratoModelResultado.setDiaVencimento(null);
-	    	contratoModelResultado.setIdentificador(null);
+	    	contratoModelResultado.setDiaVencimento(contratoRequestOriginDTO.getDiaVencimento());
+	    	contratoModelResultado.setIdentificador("CONTRATO_EMPRESTIMO_BANCARIO_11202201");
+            contratoModelResultado.setDataFim(this.recuperarDataFimContrato());
+        return contratoModelResultado;
     }
 
     private static void convertContratoModelToContratoResponseDTO(ContratoModel contratoModel, ContratoResponseDTO contratoResponseDTO) {
@@ -77,8 +78,12 @@ public class ContratoService {
         return this.tipoPeriodoFinanceiroService.findByCodigo(Long.valueOf(codigo));
     }
 
-    private PessoaResponseDTO recuperarPessoa(Integer codigo) {
-        return null;
+    private PessoaResponseDTO recuperarPessoa(Long codigo) {
+        return this.pessoaService.findOne(codigo);
+    }
+
+    private Date recuperarDataFimContrato() {
+        return new Date();
     }
 
 }
