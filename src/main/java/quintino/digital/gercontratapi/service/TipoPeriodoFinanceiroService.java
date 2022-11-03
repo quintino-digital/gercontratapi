@@ -17,4 +17,8 @@ public class TipoPeriodoFinanceiroService {
         return this.tipoPeriodoFinanceiroRepository.findAll();
     }
 
+    public TipoPeriodoFinanceiroModel findByCodigo(Long codigo) {
+        return this.tipoPeriodoFinanceiroRepository.findByCodigo(codigo);
+    }
+
 }

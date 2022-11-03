@@ -5,4 +5,6 @@ import org.springframework.stereotype.Repository;
 import quintino.digital.gercontratapi.model.TipoContratoModel;
 
 @Repository
-public interface TipoContratoRepository extends JpaRepository<TipoContratoModel, Long> { }
+public interface TipoContratoRepository extends JpaRepository<TipoContratoModel, Long> {
+    public TipoContratoModel findByCodigo(Long codigo);
+}

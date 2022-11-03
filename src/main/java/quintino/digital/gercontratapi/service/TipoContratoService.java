@@ -17,4 +17,8 @@ public class TipoContratoService {
         return this.tipoContratoRepository.findAll();
     }
 
+    public TipoContratoModel findOne(Long codigo) {
+        return this.tipoContratoRepository.findByCodigo(codigo);
+    }
+
 }

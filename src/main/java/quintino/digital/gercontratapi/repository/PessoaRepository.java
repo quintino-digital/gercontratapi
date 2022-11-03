@@ -8,5 +8,9 @@ import java.util.List;
 
 @FeignClient(name = "gerpessapi", url = "https://gerpessapi.herokuapp.com/v1/pessoa", contextId = "pessoaapiID")
 public interface PessoaRepository {
+
     @GetMapping List<PessoaResponseDTO> findAll();
+
+    @GetMapping PessoaResponseDTO findOne(Long codigo);
+
 }

@@ -1,15 +1,17 @@
 package quintino.digital.gercontratapi.service;
 
-import java.util.List;
-
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import quintino.digital.gercontratapi.dto.ContratoRequestOriginDTO;
 import quintino.digital.gercontratapi.dto.ContratoResponseDTO;
+import quintino.digital.gercontratapi.dto.PessoaResponseDTO;
 import quintino.digital.gercontratapi.model.ContratoModel;
+import quintino.digital.gercontratapi.model.TipoContratoModel;
+import quintino.digital.gercontratapi.model.TipoPeriodoFinanceiroModel;
 import quintino.digital.gercontratapi.repository.ContratoRepository;
+
+import java.util.List;
 
 @Service
 public class ContratoService {
@@ -19,6 +21,15 @@ public class ContratoService {
 
     @Autowired
     private ParcelamentoService parcerParcelamentoService;
+
+    @Autowired
+    private TipoContratoService tipoContratoService;
+
+    @Autowired
+    private TipoPeriodoFinanceiroService tipoPeriodoFinanceiroService;
+
+    @Autowired
+    private PessoaService pessoaService;
 
     public ContratoResponseDTO saveOne(ContratoRequestOriginDTO contratoRequestOriginDTO) {
         ContratoModel contratoModel = new ContratoModel();
@@ -39,24 +50,35 @@ public class ContratoService {
     }
 
     // TODO -- Implementar Conversao de ContratoRequestOriginDTO para ContratoModel
-    private static void convertContratoRequestOriginDTOToContratoModel(ContratoRequestOriginDTO contratoRequestOriginDTO, ContratoModel contratoModel) {
+    private void convertContratoRequestOriginDTOToContratoModel(ContratoRequestOriginDTO contratoRequestOriginDTO, ContratoModel contratoModel) {
     	ContratoModel contratoModelResultado = new ContratoModel();
+            contratoModelResultado.setTipoContratoModel(this.recuperarTipoContrato(contratoRequestOriginDTO.getCodigoTipoContratoModel()));
+            contratoModelResultado.setTipoPeriodoModel(this.recuperarTipoPeriodoFinanceiro(contratoRequestOriginDTO.getCodigoTipoPeriodoModel()));
+            contratoModelResultado.setPessoaContratada(null);
+            contratoModelResultado.setPessoaContratante(null);
 	    	contratoModelResultado.setDataFim(null);
-	    	contratoModelResultado.setDataInicio(null);
+	    	contratoModelResultado.setDataInicio(contratoRequestOriginDTO.getDataInicio());
+            contratoModelResultado.setQuantidadeParcela(contratoRequestOriginDTO.getQuantidadeParcela());
+            contratoModelResultado.setValorEfetivo(contratoRequestOriginDTO.getValorEfetivo());
+            contratoModelResultado.setValorParcela(contratoRequestOriginDTO.getValorParcela());
 	    	contratoModelResultado.setDiaVencimento(null);
 	    	contratoModelResultado.setIdentificador(null);
-	    	contratoModelResultado.setPessoaContratada(null);
-	    	contratoModelResultado.setPessoaContratante(null);
-	    	contratoModelResultado.setQuantidadeParcela(null);
-	    	contratoModelResultado.setTipoContratoModel(null);
-	    	contratoModelResultado.setTipoPeriodoModel(null);
-	    	contratoModelResultado.setValorEfetivo(null);
-	    	contratoModelResultado.setValorParcela(null);
-    		
     }
 
     private static void convertContratoModelToContratoResponseDTO(ContratoModel contratoModel, ContratoResponseDTO contratoResponseDTO) {
         BeanUtils.copyProperties(contratoModel, contratoResponseDTO);
+    }
+
+    private TipoContratoModel recuperarTipoContrato(Integer codigo) {
+        return this.tipoContratoService.findOne(Long.valueOf(codigo));
+    }
+
+    private TipoPeriodoFinanceiroModel recuperarTipoPeriodoFinanceiro(Integer codigo) {
+        return this.tipoPeriodoFinanceiroService.findByCodigo(Long.valueOf(codigo));
+    }
+
+    private PessoaResponseDTO recuperarPessoa(Integer codigo) {
+        return null;
     }
 
 }
