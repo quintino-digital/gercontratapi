@@ -5,4 +5,6 @@ import org.springframework.stereotype.Repository;
 import quintino.digital.gercontratapi.model.TipoPeriodoFinanceiroModel;
 
 @Repository
-public interface TipoPeriodoFinanceiroRepository extends JpaRepository<TipoPeriodoFinanceiroModel, Long> { }
+public interface TipoPeriodoFinanceiroRepository extends JpaRepository<TipoPeriodoFinanceiroModel, Long> {
+    public TipoPeriodoFinanceiroModel findByCodigo(Long codigo);
+}
