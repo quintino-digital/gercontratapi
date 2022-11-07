@@ -3,10 +3,7 @@ package quintino.digital.gercontratapi.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import quintino.digital.gercontratapi.dto.PessoaResponseDTO;
 import quintino.digital.gercontratapi.service.PessoaService;
 
@@ -23,6 +20,11 @@ public class PessoaController {
     @GetMapping
     public ResponseEntity<List<PessoaResponseDTO>> findAll() {
         return ResponseEntity.status(HttpStatus.OK).body(this.pessoaService.findAll());
+    }
+
+    @GetMapping("/{codigo}")
+    public ResponseEntity<PessoaResponseDTO> findOne(@PathVariable("codigo") Long codigo) {
+        return ResponseEntity.status(HttpStatus.OK).body(this.pessoaService.findOne(codigo));
     }
 
 }

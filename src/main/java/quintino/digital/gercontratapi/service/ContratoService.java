@@ -3,6 +3,7 @@ package quintino.digital.gercontratapi.service;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import quintino.digital.gercontratapi.dto.ContratoPessoaRequestDTO;
 import quintino.digital.gercontratapi.dto.ContratoRequestOriginDTO;
 import quintino.digital.gercontratapi.dto.ContratoResponseDTO;
 import quintino.digital.gercontratapi.dto.PessoaResponseDTO;
@@ -11,6 +12,7 @@ import quintino.digital.gercontratapi.model.TipoContratoModel;
 import quintino.digital.gercontratapi.model.TipoPeriodoFinanceiroModel;
 import quintino.digital.gercontratapi.repository.ContratoRepository;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -45,8 +47,24 @@ public class ContratoService {
         this.parcerParcelamentoService.gerarContratoParcelamento(contratoModel);
     }
 
-    public List<ContratoModel> findAll() {
-        return this.contratoRepository.findAll();
+    public List<ContratoPessoaRequestDTO> findAll() {
+        List<ContratoPessoaRequestDTO> contratoPessoaRequestDTOList = new ArrayList<>();
+        for(ContratoModel contratoModel : this.contratoRepository.findAll()) {
+            ContratoPessoaRequestDTO contratoPessoaRequestDTO = new ContratoPessoaRequestDTO();
+                contratoPessoaRequestDTO.setNomePessoaContratante(this.recuperarNomePessoa(contratoModel.getPessoaContratante()));
+                contratoPessoaRequestDTO.setNomePessoaContratada(this.recuperarNomePessoa(contratoModel.getPessoaContratada()));
+                contratoPessoaRequestDTO.setDataFim(contratoModel.getDataFim());
+                contratoPessoaRequestDTO.setDataInicio(contratoModel.getDataInicio());
+                contratoPessoaRequestDTO.setDiaVencimento(contratoModel.getDiaVencimento());
+                contratoPessoaRequestDTO.setIdentificador(contratoModel.getIdentificador());
+                contratoPessoaRequestDTO.setTipoContratoModel(contratoModel.getTipoContratoModel());
+                contratoPessoaRequestDTO.setTipoPeriodoModel(contratoModel.getTipoPeriodoModel());
+                contratoPessoaRequestDTO.setValorJuros(contratoModel.getValorParcela());
+                contratoPessoaRequestDTO.getValorEfetivo(contratoModel.getValorEfetivo());
+                contratoPessoaRequestDTO.setQuantidadeParcela(contratoModel.getQuantidadeParcela());
+                contratoPessoaRequestDTOList.add(contratoPessoaRequestDTO);
+        }
+        return contratoPessoaRequestDTOList;
     }
 
     // TODO -- Implementar Conversao de ContratoRequestOriginDTO para ContratoModel
@@ -84,6 +102,10 @@ public class ContratoService {
 
     private Date recuperarDataFimContrato() {
         return new Date();
+    }
+
+    public String recuperarNomePessoa(Long codigo) {
+        return this.recuperarPessoa(codigo).getNome();
     }
 
 }
