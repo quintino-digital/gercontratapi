@@ -115,6 +115,7 @@ public class ContratoService {
         return this.recuperarPessoa(codigo).getNome();
     }
     
+    // TODO -- Passar apenas os parametros necessarios
     /**
      * Gerar Identificador do Contrato de Acordo com a regra: 
      * CONTRATO<TOTALIZADOR_PARCELA_MESMO_TIPO><ANO_INICIO_CONTRATO><MES_INICIO_CONTRATO><DIA_INICIO_CONTRATO><NUMERO_PARCELA>RECEITAFIXA
@@ -127,8 +128,16 @@ public class ContratoService {
     	StringBuilder stringBuilder = new StringBuilder("CONTRATO")
     			.append(quantidadeContratosMesmoTipo > 99 ? quantidadeContratosMesmoTipo : "00" + quantidadeContratosMesmoTipo)
     			.append(DateUtility.formatarData(contratoRequestOriginDTO.getDataInicio(), DateUtility.FORMATO_DATA_AAAAMMDD))
-    			.append(tipoContratoModel.getDescricao().replaceAll("\\s+",""));
-    	return Normalizer.normalize(stringBuilder.toString().toUpperCase(), Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "");
+    			.append(removerCaracteresEmBranco(tipoContratoModel));
+    	return removerAcentuacaoPalavras(stringBuilder);
     }
+
+	public String removerCaracteresEmBranco(TipoContratoModel tipoContratoModel) {
+		return tipoContratoModel.getDescricao().replaceAll("\\s+","");
+	}
+	
+	public String removerAcentuacaoPalavras(StringBuilder stringBuilder) {
+		return Normalizer.normalize(stringBuilder.toString().toUpperCase(), Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "");
+	}
 
 }
