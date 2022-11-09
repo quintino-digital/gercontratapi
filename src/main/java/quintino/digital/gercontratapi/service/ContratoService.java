@@ -127,7 +127,7 @@ public class ContratoService {
     	long quantidadeContratosMesmoTipo = this.contratoImplementacaoRepository.recuperarQuantidadeContratoPorMesmoTipo(Long.valueOf(contratoRequestOriginDTO.getCodigoTipoContratoModel()));
     	StringBuilder stringBuilder = new StringBuilder("CONTRATO")
     			.append(quantidadeContratosMesmoTipo > 99 ? quantidadeContratosMesmoTipo : "00" + quantidadeContratosMesmoTipo)
-    			.append(DateUtility.formatarData(contratoRequestOriginDTO.getDataInicio(), DateUtility.FORMATO_DATA_AAAAMMDD))
+    			.append(DateUtility.formatarData(DateUtility.gerarData(contratoRequestOriginDTO.getDiaVencimento()), DateUtility.FORMATO_DATA_AAAAMMDD))
     			.append(removerCaracteresEmBranco(tipoContratoModel));
     	return removerAcentuacaoPalavras(stringBuilder);
     }
