@@ -1,8 +1,14 @@
 package quintino.digital.gercontratapi.service;
 
+import java.text.Normalizer;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import quintino.digital.gercontratapi.dto.ContratoPessoaRequestDTO;
 import quintino.digital.gercontratapi.dto.ContratoRequestOriginDTO;
 import quintino.digital.gercontratapi.dto.ContratoResponseDTO;
@@ -10,11 +16,9 @@ import quintino.digital.gercontratapi.dto.PessoaResponseDTO;
 import quintino.digital.gercontratapi.model.ContratoModel;
 import quintino.digital.gercontratapi.model.TipoContratoModel;
 import quintino.digital.gercontratapi.model.TipoPeriodoFinanceiroModel;
+import quintino.digital.gercontratapi.repository.ContratoImplementacaoRepository;
 import quintino.digital.gercontratapi.repository.ContratoRepository;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import quintino.digital.gercontratapi.utility.DateUtility;
 
 @Service
 public class ContratoService {
@@ -33,6 +37,9 @@ public class ContratoService {
 
     @Autowired
     private PessoaService pessoaService;
+    
+    @Autowired
+    private ContratoImplementacaoRepository contratoImplementacaoRepository;
 
     public ContratoResponseDTO saveOne(ContratoRequestOriginDTO contratoRequestOriginDTO) {
         ContratoModel contratoModel = new ContratoModel();
@@ -79,7 +86,7 @@ public class ContratoService {
             contratoModelResultado.setValorEfetivo(contratoRequestOriginDTO.getValorEfetivo());
             contratoModelResultado.setValorParcela(contratoRequestOriginDTO.getValorParcela());
 	    	contratoModelResultado.setDiaVencimento(contratoRequestOriginDTO.getDiaVencimento());
-	    	contratoModelResultado.setIdentificador("CONTRATO_EMPRESTIMO_BANCARIO_11202201");
+	    	contratoModelResultado.setIdentificador(this.gerarIdentificadorContrato(contratoRequestOriginDTO));
             contratoModelResultado.setDataFim(this.recuperarDataFimContrato());
         return contratoModelResultado;
     }
@@ -106,6 +113,22 @@ public class ContratoService {
 
     public String recuperarNomePessoa(Long codigo) {
         return this.recuperarPessoa(codigo).getNome();
+    }
+    
+    /**
+     * Gerar Identificador do Contrato de Acordo com a regra: 
+     * CONTRATO<TOTALIZADOR_PARCELA_MESMO_TIPO><ANO_INICIO_CONTRATO><MES_INICIO_CONTRATO><DIA_INICIO_CONTRATO><NUMERO_PARCELA>RECEITAFIXA
+     * @param contratoRequestOriginDTO
+     * @return
+     */
+    private String gerarIdentificadorContrato(ContratoRequestOriginDTO contratoRequestOriginDTO) {
+    	TipoContratoModel tipoContratoModel = this.tipoContratoService.findOne(Long.valueOf(contratoRequestOriginDTO.getCodigoTipoContratoModel()));
+    	long quantidadeContratosMesmoTipo = this.contratoImplementacaoRepository.recuperarQuantidadeContratoPorMesmoTipo(Long.valueOf(contratoRequestOriginDTO.getCodigoTipoContratoModel()));
+    	StringBuilder stringBuilder = new StringBuilder("CONTRATO")
+    			.append(quantidadeContratosMesmoTipo > 99 ? quantidadeContratosMesmoTipo : "00" + quantidadeContratosMesmoTipo)
+    			.append(DateUtility.formatarData(contratoRequestOriginDTO.getDataInicio(), DateUtility.FORMATO_DATA_AAAAMMDD))
+    			.append(tipoContratoModel.getDescricao().replaceAll("\\s+",""));
+    	return Normalizer.normalize(stringBuilder.toString().toUpperCase(), Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "");
     }
 
 }

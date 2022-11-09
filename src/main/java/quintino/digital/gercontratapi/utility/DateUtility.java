@@ -7,6 +7,7 @@ import java.util.Date;
 public class DateUtility {
 
     public static final String FORMATO_DATA_DDMMAAAA = "dd/MM/yyyy";
+    public static final String FORMATO_DATA_AAAAMMDD = "yyyyMMdd";
 
     public static Date gerarData(Integer diaVencimento, Integer mesVencimento) {
         Calendar calendar = Calendar.getInstance();
@@ -16,8 +17,14 @@ public class DateUtility {
         return calendar.getTime();
     }
 
+    // TODO -- Excluir esse formatador
     public static String formatarData(Date dataReferencia) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(FORMATO_DATA_DDMMAAAA);
+        return simpleDateFormat.format(dataReferencia);
+    }
+    
+    public static String formatarData(Date dataReferencia, String formato) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(formato);
         return simpleDateFormat.format(dataReferencia);
     }
 

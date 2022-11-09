@@ -3,6 +3,7 @@ package quintino.digital.gercontratapi.model;
 import javax.persistence.*;
 import java.util.Date;
 
+// TODO -- Mapear campo TB_PARCELAMENTO.QUANTIDADE_DIA_ATRASO
 @Entity
 @Table(name = "TB_PARCELAMENTO")
 public class ParcelamentoModel {
