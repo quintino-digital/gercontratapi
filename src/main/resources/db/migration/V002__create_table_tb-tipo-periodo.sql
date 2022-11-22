@@ -1,5 +1,4 @@
 create table if not exists tb_tipo_periodo (
-    codigo serial not null,
-    descricao varchar not null unique,
-    constraint pk_tipo_periodo primary key (codigo)
+    codigo int auto_increment primary key,
+    descricao varchar(100) not null unique
 );

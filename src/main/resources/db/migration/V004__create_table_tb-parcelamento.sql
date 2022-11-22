@@ -1,7 +1,6 @@
 create table if not exists tb_parcelamento (
-        codigo serial not null,
+        codigo int auto_increment primary key,
         data_vencimento date not null,
         data_pagamento date null,
-        identificador varchar not null,
-        constraint pk_parcelamento primary key (codigo)
+        identificador varchar(100) not null
 );
